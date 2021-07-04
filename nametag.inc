@@ -5,15 +5,32 @@
     	----- by Nyzenic -----
     	https://forum.sa-mp.com/showthread.php?p=4004123
 */
-
-#include <YSI\y_hooks>
+AntiDeAMX()
+{
+    new a[][] = {
+        "Unarmed (Fist)",
+        "Brass K"
+    };
+    #pragma unused a
+}
+#include <a_samp>
+#include <streamer>
 #include <YSI\y_timers>
+#include <YSI\y_hooks>
 #define DTC_NAMETAG 15.0 //distance
 new Text3D:Player3DHealth[MAX_PLAYERS];
 new Text3D:Player3DArmour[MAX_PLAYERS];
 new Text3D:Player3DName[MAX_PLAYERS];
 //ShowNameTags(1);
-hook TASK_NAMETAG[1000](){
+hook OnGameModeInit()
+{
+     ShowNameTags(0);
+     AntiDeAMX();
+     printf("NAMETAG.INC By Mr Son Loading");
+     return 1;
+}
+task TASK_NAMETAG[1000]()
+{
     for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++)
     {
         if(IsPlayerConnected(i))
@@ -29,6 +46,7 @@ hook TASK_NAMETAG[1000](){
 			UpdateDynamic3DTextLabelText(Player3DName[i], 0xFFFFFFFF, nametag);
     	}
     }
+    return 1;
 }
 hook OnPlayerConnect(playerid)
 {
